@@ -1,0 +1,113 @@
+CREATE TABLE Vendor(
+   VendorID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50) NOT NULL,
+   adress VARCHAR(50) NOT NULL,
+   zipcode INT NOT NULL,
+   city VARCHAR(50),
+   email VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE ProductCategory(
+   ProductCategoryID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50) NOT NULL,
+   Description VARCHAR(50)
+);
+
+CREATE TABLE ProductBrand(
+   BrandID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50) NOT NULL,
+   Description VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE role(
+   RoleID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50)
+);
+
+CREATE TABLE Status(
+   StatusID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Product(
+   ProductID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50) NOT NULL,
+   Description VARCHAR(50),
+   Price DECIMAL(15,2) NOT NULL,
+   Image VARCHAR(200) NOT NULL,
+   ProductDate DATETIME2,
+   Quantity INT NOT NULL,
+   VendorID INT NOT NULL,
+   ProductCategoryID INT NOT NULL,
+   BrandID INT NOT NULL,
+   FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID),
+   FOREIGN KEY(ProductCategoryID) REFERENCES ProductCategory(ProductCategoryID),
+   FOREIGN KEY(BrandID) REFERENCES ProductBrand(BrandID)
+);
+
+CREATE TABLE Person(
+   PersonID INT IDENTITY(1,1) PRIMARY KEY,
+   Email VARCHAR(50) NOT NULL,
+   Password VARCHAR(100) NOT NULL,
+   FirstName VARCHAR(50) NOT NULL,
+   LastName VARCHAR(50) NOT NULL,
+   RoleID INT NOT NULL,
+   FOREIGN KEY(RoleID) REFERENCES role(RoleID)
+);
+
+CREATE TABLE SalesOrder(
+   SalesOrderID INT IDENTITY(1,1) PRIMARY KEY,
+   SubTotal DECIMAL(15,2) NOT NULL,
+   OrderDate DATETIME2 NOT NULL,
+   ProductQuantity INT NOT NULL,
+   StatusID INT NOT NULL,
+   PersonID INT NOT NULL,
+   FOREIGN KEY(StatusID) REFERENCES Status(StatusID),
+   FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
+);
+
+CREATE TABLE Discount(
+   DiscountID INT IDENTITY(1,1) PRIMARY KEY,
+   Name VARCHAR(50) NOT NULL,
+   DiscountPercent DECIMAL(15,2) NOT NULL,
+   Active BIT NOT NULL,
+   ProductID INT NOT NULL,
+   FOREIGN KEY(ProductID) REFERENCES Product(ProductID)
+);
+
+CREATE TABLE Address(
+   AddressID INT IDENTITY(1,1) PRIMARY KEY,
+   City VARCHAR(50) NOT NULL,
+   ZipCode INT NOT NULL,
+   Address VARCHAR(50) NOT NULL,
+   FirstName VARCHAR(50) NOT NULL,
+   LastName VARCHAR(50) NOT NULL,
+   PersonID INT NOT NULL,
+   FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
+);
+
+CREATE TABLE PurchaseOrder(
+   PurchaseOrderID INT IDENTITY(1,1) PRIMARY KEY,
+   OrderDate DATETIME2,
+   Quantity INT,
+   SubTotal DECIMAL(15,2),
+   ProductID INT NOT NULL,
+   StatusID INT NOT NULL,
+   VendorID INT,
+   PersonID INT NOT NULL,
+   FOREIGN KEY(ProductID) REFERENCES Product(ProductID),
+   FOREIGN KEY(StatusID) REFERENCES Status(StatusID),
+   FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID),
+   FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
+);
+
+CREATE TABLE SalesOrderDetail(
+   ProductID INT,
+   SalesOrderID INT,
+   LineTotal DECIMAL(15,2) NOT NULL,
+   OrderQuantity INT NOT NULL,
+   UnitPrice DECIMAL(15,2),
+   PRIMARY KEY(ProductID, SalesOrderID),
+   FOREIGN KEY(ProductID) REFERENCES Product(ProductID),
+   FOREIGN KEY(SalesOrderID) REFERENCES SalesOrder(SalesOrderID)
+);
