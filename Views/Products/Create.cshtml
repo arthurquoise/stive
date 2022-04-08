@@ -13,11 +13,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" />
-                <span asp-validation-for="ProductId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -48,15 +43,15 @@
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VendorId" class="control-label"></label>
+                <label asp-for="VendorId" class="control-label">Vendor</label>
                 <select asp-for="VendorId" class ="form-control" asp-items="ViewBag.VendorId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ProductCategoryId" class="control-label"></label>
+                <label asp-for="ProductCategoryId" class="control-label">Product Category</label>
                 <select asp-for="ProductCategoryId" class ="form-control" asp-items="ViewBag.ProductCategoryId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="BrandId" class="control-label"></label>
+                <label asp-for="BrandId" class="control-label">Brand</label>
                 <select asp-for="BrandId" class ="form-control" asp-items="ViewBag.BrandId"></select>
             </div>
             <div class="form-group">

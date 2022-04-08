@@ -49,9 +49,9 @@ namespace stive.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Description");
+            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name");
             ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name");
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress");
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name");
             return View();
         }
 
@@ -68,9 +68,9 @@ namespace stive.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Description", product.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name", product.BrandId);
             ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name", product.ProductCategoryId);
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress", product.VendorId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
             return View(product);
         }
 
@@ -87,9 +87,9 @@ namespace stive.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Description", product.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name", product.BrandId);
             ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name", product.ProductCategoryId);
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress", product.VendorId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
             return View(product);
         }
 
