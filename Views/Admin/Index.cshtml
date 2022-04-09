@@ -9,6 +9,64 @@
             Admin Panel
         </h1>
 
+    <ul>
+        <li>
+            <a asp-controller="Products" asp-action="Index">
+                Manage products
+            </a>
+        </li>
+        <li>
+            <a asp-controller="PurchaseOrders" asp-action="Index">
+                Manage purchase orders (Vendors)
+            </a>
+        </li>
+        <li>
+            <a asp-controller="SalesOrders" asp-action="Index">
+                Manage sales orders (customers)
+            </a>
+        </li>
+        <li>
+            <a asp-controller="People" asp-action="Index">
+                Manage users
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="ProductCategories" asp-action="Index">
+                Manage Categories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Vendors" asp-action="Index">
+                Manage Vendors
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="ProductBrands" asp-action="Index">
+                Manage Brands
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Addresses" asp-action="Index">
+                Manage Addresses
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Discounts" asp-action="Index">
+                Manage Discounts
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Roles" asp-action="Index">
+                Manage Roles
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Status" asp-action="Index">
+                Manage Status
+            </a>
+        </li>
+    </ul>
+}
         <ul>
             <li>
                 <a asp-controller="Products" asp-action="Index">
