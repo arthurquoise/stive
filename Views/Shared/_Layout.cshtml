@@ -21,14 +21,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                        @if (ViewBag.sessionv != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+                            </li>
+                        }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
                 </div>
+                <a class="nav-link text-dark border" asp-area="" asp-controller="Admin" asp-action="Login">Login</a>
+                @if (ViewBag.sessionv != null)
+                {
+                     <a class="nav-link text-dark border ml-3" asp-area="" asp-controller="Admin" asp-action="Logout">Logout</a>
+                }
             </div>
         </nav>
     </header>

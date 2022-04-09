@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using stive.Models;
 using System;
@@ -20,6 +21,7 @@ namespace stive.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
             return View();
         }
 

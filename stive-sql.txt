@@ -13,6 +13,21 @@ CREATE TABLE ProductCategory(
    Description VARCHAR(50)
 );
 
+CREATE TABLE [dbo].[Admin](
+	[AdminId] [int] IDENTITY(1,1) NOT NULL,
+	[Email] [nvarchar](max) NOT NULL,
+	[Password] [nvarchar](max) NOT NULL,
+	[ConfirmPasssword] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Admin] PRIMARY KEY CLUSTERED 
+(
+	[AdminId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+INSERT INTO Admin (Email, Password, ConfirmPasssword)
+VALUES
+('admin@mail.com', 'mdp', 'mdp');
+
 CREATE TABLE ProductBrand(
    BrandID INT IDENTITY(1,1) PRIMARY KEY,
    Name VARCHAR(50) NOT NULL,
