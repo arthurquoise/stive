@@ -53,7 +53,7 @@ namespace stive.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoleId,Name")] Role role)
+        public async Task<IActionResult> Create([Bind("Name")] Role role)
         {
             if (ModelState.IsValid)
             {
