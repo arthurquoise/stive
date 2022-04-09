@@ -50,7 +50,6 @@ C:\Users\artio\source\repos\stive\obj\Debug\net5.0\stive.MvcApplicationPartsAsse
 C:\Users\artio\source\repos\stive\obj\Debug\net5.0\stive.RazorAssemblyInfo.cache
 C:\Users\artio\source\repos\stive\obj\Debug\net5.0\stive.RazorAssemblyInfo.cs
 C:\Users\artio\source\repos\stive\obj\Debug\net5.0\staticwebassets\stive.StaticWebAssets.Manifest.cache
-C:\Users\artio\source\repos\stive\obj\Debug\net5.0\staticwebassets\stive.StaticWebAssets.xml
 C:\Users\artio\source\repos\stive\obj\Debug\net5.0\scopedcss\bundle\stive.styles.css
 C:\Users\artio\source\repos\stive\obj\Debug\net5.0\stive.TagHelpers.input.cache
 C:\Users\artio\source\repos\stive\obj\Debug\net5.0\stive.TagHelpers.output.cache
@@ -412,3 +411,5 @@ C:\Users\Maxence\Desktop\stive\obj\Debug\net5.0\stive.pdb
 C:\Users\Maxence\Desktop\stive\obj\Debug\net5.0\stive.genruntimeconfig.cache
 C:\Users\Maxence\Desktop\stive\bin\Debug\net5.0\package-lock.json
 C:\Users\Maxence\Desktop\stive\bin\Debug\net5.0\package.json
+C:\Users\artio\Source\Repos\stive\bin\Debug\net5.0\package-lock.json
+C:\Users\artio\Source\Repos\stive\bin\Debug\net5.0\package.json

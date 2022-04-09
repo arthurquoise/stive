@@ -34,7 +34,7 @@ namespace stive.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-OU9K4BT\\SQLEXPRESS; Initial Catalog=stive; Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=PLUTON\\SQLEXPRESS; Initial Catalog=stive; Integrated Security=True");
             }
         }
 

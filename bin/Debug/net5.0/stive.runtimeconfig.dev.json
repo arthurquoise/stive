@@ -1,9 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Maxence\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Maxence\\.nuget\\packages",
-      "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
+      "C:\\Users\\artio\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\artio\\.nuget\\packages"
     ]
   }
 }
