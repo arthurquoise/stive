@@ -33,7 +33,6 @@ namespace stive.Controllers
             if (ModelState.IsValid)
             {
                 var f_password = password;
-                // Checking the 
                 var data = _context.Admin.Where(s => s.Email.Equals(email) && s.Password.Equals(password));
                 if (data.Count() > 0)
                 {
