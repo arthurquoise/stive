@@ -17,6 +17,7 @@ namespace stive.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
             return View();
         }
 
