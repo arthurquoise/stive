@@ -34,7 +34,7 @@ CREATE TABLE Product(
    Name VARCHAR(50) NOT NULL,
    Description VARCHAR(50),
    Price DECIMAL(15,2) NOT NULL,
-   Image VARCHAR(200) NOT NULL,
+   Image VARCHAR(MAX) NOT NULL,
    ProductDate DATETIME2,
    Quantity INT NOT NULL,
    VendorID INT NOT NULL,

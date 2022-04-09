@@ -9,7 +9,37 @@
     <ul>
         <li>
             <a asp-controller="Products" asp-action="Index">
-                Products
+                Manage products
+            </a>
+        </li>
+        <li>
+            <a asp-controller="PurchaseOrders" asp-action="Index">
+                Manage vendor orders (Vendors)
+            </a>
+        </li>
+        <li>
+            <a asp-controller="SalesOrders" asp-action="Index">
+                Manage sales orders (customers)
+            </a>
+        </li>
+        <li>
+            <a asp-controller="People" asp-action="Index">
+                Manage users
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="ProductCategories" asp-action="Index">
+                Manage Categories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Vendors" asp-action="Index">
+                Manage Vendors
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="ProductBrands" asp-action="Index">
+                Manage Brands
             </a>
         </li>
     </ul>
