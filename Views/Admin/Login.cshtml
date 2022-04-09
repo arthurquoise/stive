@@ -1,0 +1,41 @@
+﻿@model stive.Models.Admin
+
+
+@if (ViewBag.sessionv != null)
+{
+<p class="text-center text-success">
+    Vous êtes déjà connecté en tant que: @ViewBag.sessionv
+</p>}
+
+<div class="container border justify-content-xl-center p-4">
+    <form method="post" asp-action="LoginPost">
+        <div class="form-group row">
+            <div class="col-5 mx-auto">
+                <label asp-for="Email" class="text-black-50 text-center">Adresse Email</label>
+                <input asp-for="Email" class="form-control" />
+                @if (ViewBag.error != null)
+                {
+                <span asp-validation-for="Email" class="text-danger">@ViewBag.error</span>
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 mx-auto">
+                <label asp-for="Password" class="text-black-50 text-center">Mot de passe</label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row ">
+            <div class="col-4 row mt-3 mx-auto">
+                <div class="col d-flex">
+                    <input type="submit" class="btn btn-info w-35 mx-auto" value="Se connecter" />
+                </div>
+                <div class="col d-flex">
+                    <a class="btn btn-dark w-35 mx-auto" asp-controller="Home" asp-action="Index">Retour</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

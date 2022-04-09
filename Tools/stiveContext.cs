@@ -30,12 +30,13 @@ namespace stive.Models
         public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<Admin> Admin { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=PLUTON\\SQLEXPRESS; Initial Catalog=stive; Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=localhost; Initial Catalog=stive; Integrated Security=True");
             }
         }
 

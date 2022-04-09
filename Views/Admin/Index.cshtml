@@ -2,9 +2,12 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    <h1>
-    Admin Panel
-    </h1>
+    // Checking if the user is connected to display the admin page or get an error message
+    @if (ViewBag.sessionv != null)
+    {
+        <h1>
+            Admin Panel
+        </h1>
 
     <ul>
         <li>
@@ -14,7 +17,7 @@
         </li>
         <li>
             <a asp-controller="PurchaseOrders" asp-action="Index">
-                Manage purchase orders (Vendors)
+                Manage vendor orders (Vendors)
             </a>
         </li>
         <li>
@@ -40,26 +43,6 @@
         <li class="nav-item">
             <a asp-area="" asp-controller="ProductBrands" asp-action="Index">
                 Manage Brands
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-area="" asp-controller="Addresses" asp-action="Index">
-                Manage Addresses
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-area="" asp-controller="Discounts" asp-action="Index">
-                Manage Discounts
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-area="" asp-controller="Roles" asp-action="Index">
-                Manage Roles
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-area="" asp-controller="Status" asp-action="Index">
-                Manage Status
             </a>
         </li>
     </ul>

@@ -2,7 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (ViewBag.sessionv != null)
+{
+    <p class="text-center text-success">
+        Vous êtes connecté en tant que compte administrateur : @ViewBag.sessionv
+    </p>
+}
