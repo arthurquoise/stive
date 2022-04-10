@@ -53,33 +53,6 @@ namespace stive.Controllers
             }
         }
 
-        public async Task<IActionResult> Restock(int? id)
-        {
-            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name", product.BrandId);
-            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name", product.ProductCategoryId);
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
-
-            if (ViewBag.sessionv == null)
-            {
-                return View("AccessForbiden");
-            }
-            else
-            {
-                return View(product);
-            }
-        }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)

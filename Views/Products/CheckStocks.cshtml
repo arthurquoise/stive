@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.Brand.Name)
             </td>
             <td>
-                <a asp-action="Restock" asp-route-id="@item.ProductId">Restock</a>
+                <a asp-controller="PurchaseOrders" asp-action="Create" asp-route-id="@item.ProductId">Restock</a>
             </td>
         </tr>
         }

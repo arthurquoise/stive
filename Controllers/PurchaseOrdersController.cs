@@ -68,14 +68,21 @@ namespace stive.Controllers
         }
 
         // GET: PurchaseOrders/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
             ViewBag.sessionv = HttpContext.Session.GetString("Connected");
 
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
+            var product = await _context.Products.FindAsync(id);
+
+            if (product.Quantity != null)
+            {
+                ViewBag.productQuantity = product.Quantity;
+            }
+
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", product.ProductId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name");
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
+            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
 
             if (ViewBag.sessionv == null)
             {
@@ -94,6 +101,7 @@ namespace stive.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PurchaseOrderId,OrderDate,Quantity,SubTotal,ProductId,StatusId,VendorId,PersonId")] PurchaseOrder purchaseOrder)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(purchaseOrder);
