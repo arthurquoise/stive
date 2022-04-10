@@ -36,7 +36,7 @@ namespace stive.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=localhost; Initial Catalog=stive; Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=PLUTON\\SQLEXPRESS;Database=stive;Trusted_Connection=True;");
             }
         }
 
