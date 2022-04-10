@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,70 @@ namespace stive.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             var stiveContext = _context.Products.Include(p => p.Brand).Include(p => p.ProductCategory).Include(p => p.Vendor);
-            return View(await stiveContext.ToListAsync());
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(await stiveContext.ToListAsync());
+            }
+        }
+
+        public async Task<IActionResult> CheckStocks()
+        {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
+            var stiveContext = _context.Products.Where(quantity => quantity.Quantity <= 5).Include(p => p.Brand).Include(p => p.ProductCategory).Include(p => p.Vendor);
+
+            Console.WriteLine(stiveContext);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(await stiveContext.ToListAsync());
+            }
+        }
+
+        public async Task<IActionResult> Restock(int? id)
+        {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name", product.BrandId);
+            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name", product.ProductCategoryId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -43,16 +101,33 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name");
             ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name");
             ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name");
-            return View();
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Products/Create
@@ -77,6 +152,8 @@ namespace stive.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -90,7 +167,15 @@ namespace stive.Controllers
             ViewData["BrandId"] = new SelectList(_context.ProductBrands, "BrandId", "Name", product.BrandId);
             ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategories, "ProductCategoryId", "Name", product.ProductCategoryId);
             ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
-            return View(product);
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         // POST: Products/Edit/5
@@ -134,6 +219,8 @@ namespace stive.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -149,7 +236,14 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         // POST: Products/Delete/5

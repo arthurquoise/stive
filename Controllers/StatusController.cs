@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +22,23 @@ namespace stive.Controllers
         // GET: Status
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Statuses.ToListAsync());
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(await _context.Statuses.ToListAsync());
+            }
         }
 
         // GET: Status/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -39,13 +51,29 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(status);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(status);
+            }
         }
 
         // GET: Status/Create
         public IActionResult Create()
         {
-            return View();
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Status/Create
@@ -67,6 +95,8 @@ namespace stive.Controllers
         // GET: Status/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -77,7 +107,15 @@ namespace stive.Controllers
             {
                 return NotFound();
             }
-            return View(status);
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(status);
+            }
         }
 
         // POST: Status/Edit/5
@@ -118,6 +156,8 @@ namespace stive.Controllers
         // GET: Status/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -130,7 +170,14 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(status);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(status);
+            }
         }
 
         // POST: Status/Delete/5
