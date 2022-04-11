@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using stive.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace stive.Controllers
@@ -15,12 +16,26 @@ namespace stive.Controllers
             _context = stiveContext;
         }
 
-        public async Task<IActionResult> Index(int categoryId)
+        [HttpGet]
+        public async Task<IActionResult> Index(int? id)
         {
+
             ViewBag.categories = await _context.ProductCategories.ToListAsync();
-            var stiveContext = _context.Products.Include(p => p.Brand).Include(p => p.ProductCategory).Include(p => p.Vendor);
-            return View(await stiveContext.ToListAsync());
+
+            var stiveContext = await _context.Products.Include(p => p.Brand).Include(p => p.ProductCategory).Include(p => p.Vendor).ToListAsync();
+
+            if (id != null)
+            {
+                    stiveContext = await _context.Products.Include(p => p.Brand)
+                    .Include(p => p.ProductCategory)
+                    .Include(p => p.Vendor)
+                    .Where(p => p.ProductCategoryId == id)
+                    .ToListAsync();
+            }
+            
+            return View(stiveContext);
         }
+
 
         public async Task<IActionResult> ProductDetail(int? id)
         {
