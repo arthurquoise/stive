@@ -10,7 +10,8 @@ namespace stive.Controllers
     {
         private List<SalesOrder> cart;
 
-        [HttpPost]
+        // GET api/user/firstname/lastname/address
+        [HttpGet("{productId}/{quantity}")]
         public async Task<IActionResult> addItem(int? id)
         {
             cart = SessionHelper.GetObjectFromJson<List<SalesOrder>>(HttpContext.Session, "cart");
