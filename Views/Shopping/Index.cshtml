@@ -1,0 +1,27 @@
+﻿@model IEnumerable<stive.Models.Product>
+
+@{
+    ViewData["Title"] = "Shopping";
+}
+
+<h1>Shopping</h1>
+
+<div class="w-100 row">
+    @foreach (var item in Model)
+    {
+    <div class="col-md-4 align-content-center">
+        <div class="border rounded border-dark w-100 h-200 bg-light">
+            <img class="w-75 h-75 mx-5" src="@Html.DisplayFor(modelItem => item.Image)" />
+            <div class="border-top border-dark">
+                <p class="text-center text-capitaliz font-weight-bold text-dark">@Html.DisplayFor(modelItem => item.Name)</p>
+                <p class="text-center text-dark">@Html.DisplayFor(modelItem => item.Description)</p>
+                <p class="text-center text-info">Vendor : @Html.DisplayFor(modelItem => item.Brand.Name) - Category : @Html.DisplayFor(modelItem => item.ProductCategory.Name)</p>
+                <div class="d-flex flex-wrap align-content-center">
+                    <a class="text-center btn btn-success" asp-action="ProductDetail" asp-route-id="@item.ProductId">Detail</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    }
+</div>

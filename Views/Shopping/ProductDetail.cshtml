@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model stive.Models.Product
+
+@{
+    ViewData["Title"] = "Product Detail";
+}
+
+<h1>Product Detail</h1>
+
+
+
+<div class="card" style="width: 18rem;">
+<img class="card-img-top" src="@Html.DisplayFor(model => model.Image)" alt="Card image cap">
+<div class="card-body">
+<h5 class="card-title">@Html.DisplayFor(model => model.Name)</h5>
+<p class="card-text">@Html.DisplayFor(model => model.Description)</p>
+<p class="card-text">@Html.DisplayNameFor(model => model.Price)</p>
+<a asp-controller="Cart" asp-action="AddItemToCart" asp-route-action="@Model.ProductId" class="btn btn-primary">add to cart</a>
+</div>
+</div>
