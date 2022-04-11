@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using stive.Models;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace stive.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
 
             ViewBag.categories = await _context.ProductCategories.ToListAsync();
 
@@ -39,6 +41,8 @@ namespace stive.Controllers
 
         public async Task<IActionResult> ProductDetail(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
