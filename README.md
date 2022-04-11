@@ -35,8 +35,8 @@ $ Compiler le projet en lançant IIs Express
 
 # Panneau d'administration
 $ http://localhost:{port}/Auth
-$ user : admin123
-$ password : admin
+$ user : admin@mail.fr
+$ password : mdp
 ```
 
 ## Fonctionnalités

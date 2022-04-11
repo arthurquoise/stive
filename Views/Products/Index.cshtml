@@ -4,29 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+    <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<div class="w-100 row">
-    @foreach (var item in Model)
-    {
-    <div class="col-md-4 align-content-center mb-5">
-        <div class="border rounded border-dark w-100 h-100 bg-light">
-            <img class="w-75 h-75 mx-5" src="@Html.DisplayFor(modelItem => item.Image)" />
-            <div class="border-top border-dark">
-                <p class="text-center text-capitaliz font-weight-bold text-dark mb-0">@Html.DisplayFor(modelItem => item.Name)</p>
-                <p class="text-center text-dark mb-0">@Html.DisplayFor(modelItem => item.Description)</p>
-                <p class="text-center text-info mb-0">@Html.DisplayFor(modelItem => item.Brand.Name) - Stock : @Html.DisplayFor(modelItem => item.Quantity)</p>
-            </div>
-        </div>
-        <p class="text-center">
-            <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+    <div class="d-inline-flex justify-content-between w-100 mb-2">
+        <p class="w-25">
+            <a asp-action="Create">Create New</a>
         </p>
+
+        <a class="nav-link text-dark border" asp-action="CheckStocks">Check Stocks</a>
+
     </div>
-    }
-</div>
+
+
+    <div class="w-100 row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 align-content-center mb-5">
+                <div class="border rounded border-dark w-100 h-100 bg-light">
+                    <img class="w-75 h-75 mx-5" src="@Html.DisplayFor(modelItem => item.Image)" />
+                    <div class="border-top border-dark">
+                        <p class="text-center text-capitaliz font-weight-bold text-dark mb-0">@Html.DisplayFor(modelItem => item.Name)</p>
+                        <p class="text-center text-dark mb-0">@Html.DisplayFor(modelItem => item.Description)</p>
+                        <p class="text-center text-info mb-0">@Html.DisplayFor(modelItem => item.Brand.Name) - Stock : @Html.DisplayFor(modelItem => item.Quantity)</p>
+                    </div>
+                </div>
+                <p class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </p>
+            </div>
+        }
+    </div>

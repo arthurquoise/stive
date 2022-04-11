@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,25 @@ namespace stive.Controllers
         // GET: Addresses
         public async Task<IActionResult> Index()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             var stiveContext = _context.Addresses.Include(a => a.Person);
-            return View(await stiveContext.ToListAsync());
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(await stiveContext.ToListAsync());
+            }
         }
 
         // GET: Addresses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -41,14 +54,31 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(address);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(address);
+            }
         }
 
         // GET: Addresses/Create
         public IActionResult Create()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "Email");
-            return View();
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Addresses/Create
@@ -71,6 +101,8 @@ namespace stive.Controllers
         // GET: Addresses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -82,7 +114,15 @@ namespace stive.Controllers
                 return NotFound();
             }
             ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "Email", address.PersonId);
-            return View(address);
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(address);
+            }
         }
 
         // POST: Addresses/Edit/5
@@ -124,6 +164,8 @@ namespace stive.Controllers
         // GET: Addresses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -137,7 +179,14 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(address);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(address);
+            }
         }
 
         // POST: Addresses/Delete/5

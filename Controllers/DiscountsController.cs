@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,25 @@ namespace stive.Controllers
         // GET: Discounts
         public async Task<IActionResult> Index()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             var stiveContext = _context.Discounts.Include(d => d.Product);
-            return View(await stiveContext.ToListAsync());
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(await stiveContext.ToListAsync());
+            }
         }
 
         // GET: Discounts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -41,14 +54,31 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(discount);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(discount);
+            }
         }
 
         // GET: Discounts/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image");
-            return View();
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Discounts/Create
@@ -64,13 +94,15 @@ namespace stive.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image", discount.ProductId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", discount.ProductId);
             return View(discount);
         }
 
         // GET: Discounts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -81,8 +113,16 @@ namespace stive.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image", discount.ProductId);
-            return View(discount);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", discount.ProductId);
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(discount);
+            }
         }
 
         // POST: Discounts/Edit/5
@@ -117,13 +157,15 @@ namespace stive.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image", discount.ProductId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", discount.ProductId);
             return View(discount);
         }
 
         // GET: Discounts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -137,7 +179,14 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(discount);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(discount);
+            }
         }
 
         // POST: Discounts/Delete/5
