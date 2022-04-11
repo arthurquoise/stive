@@ -18,6 +18,7 @@ namespace stive.Controllers
         }
 
         [HttpGet]
+        //GET Index/categoryId
         public async Task<IActionResult> Index(int? id)
         {
             ViewBag.sessionv = HttpContext.Session.GetString("Connected");
@@ -39,6 +40,7 @@ namespace stive.Controllers
         }
 
 
+        //GET the detail of a product
         public async Task<IActionResult> ProductDetail(int? id)
         {
             ViewBag.sessionv = HttpContext.Session.GetString("Connected");
