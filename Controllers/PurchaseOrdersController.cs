@@ -74,15 +74,23 @@ namespace stive.Controllers
 
             var product = await _context.Products.FindAsync(id);
 
-            if (product.Quantity != null)
+            if (product != null)
             {
                 ViewBag.productQuantity = product.Quantity;
+                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", product.ProductId);
+                ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
+                ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
+                ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
+            }
+            else
+            {
+                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
+                ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
+                ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name");
+                ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
             }
 
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", product.ProductId);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
+
 
             if (ViewBag.sessionv == null)
             {
