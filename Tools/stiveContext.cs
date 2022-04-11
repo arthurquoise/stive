@@ -36,7 +36,7 @@ namespace stive.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-NC6SMQ7\\SQLEXPRESS;Database=stive;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-OU9K4BT\\SQLEXPRESS;Database=stive;Trusted_Connection=True;");
             }
         }
 

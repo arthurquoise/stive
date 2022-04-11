@@ -27,6 +27,13 @@ namespace stive.Controllers
 
         public IActionResult Privacy()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
             return View();
         }
 

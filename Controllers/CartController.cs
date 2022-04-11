@@ -5,6 +5,7 @@ using stive.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace stive.Controllers
 {
@@ -49,6 +50,7 @@ namespace stive.Controllers
         // GET: Cart/AddProduct/5
         public async Task<IActionResult> AddProduct(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
 
             if (SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart") == null)
             {
