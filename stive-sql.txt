@@ -1,18 +1,29 @@
-CREATE TABLE Vendor(
-   VendorID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50) NOT NULL,
-   adress VARCHAR(50) NOT NULL,
-   zipcode INT NOT NULL,
-   city VARCHAR(50),
-   email VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE ProductCategory(
-   ProductCategoryID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50) NOT NULL,
-   Description VARCHAR(50)
-);
-
+USE [stive]
+GO
+/****** Object:  Table [dbo].[Address]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Address](
+	[AddressID] [int] IDENTITY(1,1) NOT NULL,
+	[City] [varchar](50) NOT NULL,
+	[ZipCode] [int] NOT NULL,
+	[Address] [varchar](50) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[PersonID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[AddressID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Admin]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[Admin](
 	[AdminId] [int] IDENTITY(1,1) NOT NULL,
 	[Email] [nvarchar](max) NOT NULL,
@@ -23,106 +34,288 @@ CREATE TABLE [dbo].[Admin](
 	[AdminId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Discount]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Discount](
+	[DiscountID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[DiscountPercent] [decimal](15, 2) NOT NULL,
+	[Active] [bit] NOT NULL,
+	[ProductID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DiscountID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Person]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Person](
+	[PersonID] [int] IDENTITY(1,1) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Password] [varchar](100) NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[RoleID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PersonID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[ProductID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](50) NULL,
+	[Price] [decimal](15, 2) NOT NULL,
+	[Image] [varchar](200) NOT NULL,
+	[ProductDate] [datetime2](7) NULL,
+	[Quantity] [int] NOT NULL,
+	[VendorID] [int] NOT NULL,
+	[ProductCategoryID] [int] NOT NULL,
+	[BrandID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ProductID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProductBrand]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductBrand](
+	[BrandID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[BrandID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProductCategory]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductCategory](
+	[ProductCategoryID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ProductCategoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PurchaseOrder]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PurchaseOrder](
+	[PurchaseOrderID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderDate] [datetime2](7) NULL,
+	[Quantity] [int] NULL,
+	[SubTotal] [decimal](15, 2) NULL,
+	[ProductID] [int] NOT NULL,
+	[StatusID] [int] NOT NULL,
+	[VendorID] [int] NULL,
+	[PersonID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PurchaseOrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[role]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[role](
+	[RoleID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[RoleID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SalesOrder]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SalesOrder](
+	[SalesOrderID] [int] IDENTITY(1,1) NOT NULL,
+	[SubTotal] [decimal](15, 2) NOT NULL,
+	[OrderDate] [datetime2](7) NOT NULL,
+	[ProductQuantity] [int] NOT NULL,
+	[StatusID] [int] NOT NULL,
+	[PersonID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[SalesOrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SalesOrderDetail]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SalesOrderDetail](
+	[ProductID] [int] NOT NULL,
+	[SalesOrderID] [int] NOT NULL,
+	[LineTotal] [decimal](15, 2) NOT NULL,
+	[OrderQuantity] [int] NOT NULL,
+	[UnitPrice] [decimal](15, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ProductID] ASC,
+	[SalesOrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Status]    Script Date: 11/04/2022 11:59:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Status](
+	[StatusID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[StatusID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Vendor]    Script Date: 11/04/2022 11:59:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Vendor](
+	[VendorID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[adress] [varchar](50) NOT NULL,
+	[zipcode] [int] NOT NULL,
+	[city] [varchar](50) NULL,
+	[email] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[VendorID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Admin] ON 
 
-INSERT INTO Admin (Email, Password, ConfirmPasssword)
-VALUES
-('admin@mail.com', 'mdp', 'mdp');
+INSERT [dbo].[Admin] ([AdminId], [Email], [Password], [ConfirmPasssword]) VALUES (1, N'admin@mail.com', N'mdp', N'mdp')
+SET IDENTITY_INSERT [dbo].[Admin] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Person] ON 
 
-CREATE TABLE ProductBrand(
-   BrandID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50) NOT NULL,
-   Description VARCHAR(50) NOT NULL
-);
+INSERT [dbo].[Person] ([PersonID], [Email], [Password], [FirstName], [LastName], [RoleID]) VALUES (2, N'nicolas.vahuysse@gmail.com', N'mdp', N'Nicolas', N'Vanhuysse', 2)
+SET IDENTITY_INSERT [dbo].[Person] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
 
-CREATE TABLE role(
-   RoleID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50)
-);
+INSERT [dbo].[Product] ([ProductID], [Name], [Description], [Price], [Image], [ProductDate], [Quantity], [VendorID], [ProductCategoryID], [BrandID]) VALUES (3, N'LA GRANDE CUVEE BLANC 2021', N'Vin blanc', CAST(7.00 AS Decimal(15, 2)), N'https://www.vinatis.com/66187-detail_default/la-grande-cuvee-blanc-2021-domaine-lafage.png', CAST(N'2022-04-11T03:21:00.0000000' AS DateTime2), 32, 1, 2, 1)
+INSERT [dbo].[Product] ([ProductID], [Name], [Description], [Price], [Image], [ProductDate], [Quantity], [VendorID], [ProductCategoryID], [BrandID]) VALUES (4, N'RIESLING STEILLAGE TROCKEN 2020', N'Vin sympathique', CAST(12.00 AS Decimal(15, 2)), N'https://www.vinatis.com/64696-detail_default/riesling-steillage-trocken-2020-peter-peter.png', CAST(N'2022-04-11T21:03:00.0000000' AS DateTime2), 15, 2, 2, 4)
+INSERT [dbo].[Product] ([ProductID], [Name], [Description], [Price], [Image], [ProductDate], [Quantity], [VendorID], [ProductCategoryID], [BrandID]) VALUES (5, N'CHATEAU GISCOURS 2010', N'3EME CRU CLASSE', CAST(120.00 AS Decimal(15, 2)), N'https://www.vinatis.com/24357-detail_default/chateau-giscours-2010-3eme-cru-classe.png', CAST(N'2022-04-11T09:01:00.0000000' AS DateTime2), 2, 3, 1, 4)
+SET IDENTITY_INSERT [dbo].[Product] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ProductBrand] ON 
 
-CREATE TABLE Status(
-   StatusID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50) NOT NULL
-);
+INSERT [dbo].[ProductBrand] ([BrandID], [Name], [Description]) VALUES (1, N'Torres', N'Espagne, Pacs del Penedès près de Barcelone')
+INSERT [dbo].[ProductBrand] ([BrandID], [Name], [Description]) VALUES (2, N'Concha y Toro', N'Chili, Pirque au sud de Santiago du Chili')
+INSERT [dbo].[ProductBrand] ([BrandID], [Name], [Description]) VALUES (4, N'Penfolds', N'Australie')
+INSERT [dbo].[ProductBrand] ([BrandID], [Name], [Description]) VALUES (5, N'Villa Maria', N'Nouvelle-Zélande')
+INSERT [dbo].[ProductBrand] ([BrandID], [Name], [Description]) VALUES (6, N'Viña Errazuriz', N'Chili')
+SET IDENTITY_INSERT [dbo].[ProductBrand] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ProductCategory] ON 
 
-CREATE TABLE Product(
-   ProductID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50) NOT NULL,
-   Description VARCHAR(50),
-   Price DECIMAL(15,2) NOT NULL,
-   Image VARCHAR(MAX) NOT NULL,
-   ProductDate DATETIME2,
-   Quantity INT NOT NULL,
-   VendorID INT NOT NULL,
-   ProductCategoryID INT NOT NULL,
-   BrandID INT NOT NULL,
-   FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID),
-   FOREIGN KEY(ProductCategoryID) REFERENCES ProductCategory(ProductCategoryID),
-   FOREIGN KEY(BrandID) REFERENCES ProductBrand(BrandID)
-);
+INSERT [dbo].[ProductCategory] ([ProductCategoryID], [Name], [Description]) VALUES (1, N'Rouge', N'Couleur rouge')
+INSERT [dbo].[ProductCategory] ([ProductCategoryID], [Name], [Description]) VALUES (2, N'Blanc', N'Couleur blanc')
+INSERT [dbo].[ProductCategory] ([ProductCategoryID], [Name], [Description]) VALUES (3, N'Rosé', N'Couleur rosé')
+SET IDENTITY_INSERT [dbo].[ProductCategory] OFF
+GO
+SET IDENTITY_INSERT [dbo].[role] ON 
 
-CREATE TABLE Person(
-   PersonID INT IDENTITY(1,1) PRIMARY KEY,
-   Email VARCHAR(50) NOT NULL,
-   Password VARCHAR(100) NOT NULL,
-   FirstName VARCHAR(50) NOT NULL,
-   LastName VARCHAR(50) NOT NULL,
-   RoleID INT NOT NULL,
-   FOREIGN KEY(RoleID) REFERENCES role(RoleID)
-);
+INSERT [dbo].[role] ([RoleID], [Name]) VALUES (1, N'Admin')
+INSERT [dbo].[role] ([RoleID], [Name]) VALUES (2, N'User')
+SET IDENTITY_INSERT [dbo].[role] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Status] ON 
 
-CREATE TABLE SalesOrder(
-   SalesOrderID INT IDENTITY(1,1) PRIMARY KEY,
-   SubTotal DECIMAL(15,2) NOT NULL,
-   OrderDate DATETIME2 NOT NULL,
-   ProductQuantity INT NOT NULL,
-   StatusID INT NOT NULL,
-   PersonID INT NOT NULL,
-   FOREIGN KEY(StatusID) REFERENCES Status(StatusID),
-   FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
-);
+INSERT [dbo].[Status] ([StatusID], [Name]) VALUES (1, N'En attente')
+INSERT [dbo].[Status] ([StatusID], [Name]) VALUES (2, N'Livré')
+INSERT [dbo].[Status] ([StatusID], [Name]) VALUES (3, N'Annulé')
+SET IDENTITY_INSERT [dbo].[Status] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Vendor] ON 
 
-CREATE TABLE Discount(
-   DiscountID INT IDENTITY(1,1) PRIMARY KEY,
-   Name VARCHAR(50) NOT NULL,
-   DiscountPercent DECIMAL(15,2) NOT NULL,
-   Active BIT NOT NULL,
-   ProductID INT NOT NULL,
-   FOREIGN KEY(ProductID) REFERENCES Product(ProductID)
-);
-
-CREATE TABLE Address(
-   AddressID INT IDENTITY(1,1) PRIMARY KEY,
-   City VARCHAR(50) NOT NULL,
-   ZipCode INT NOT NULL,
-   Address VARCHAR(50) NOT NULL,
-   FirstName VARCHAR(50) NOT NULL,
-   LastName VARCHAR(50) NOT NULL,
-   PersonID INT NOT NULL,
-   FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
-);
-
-CREATE TABLE PurchaseOrder(
-   PurchaseOrderID INT IDENTITY(1,1) PRIMARY KEY,
-   OrderDate DATETIME2,
-   Quantity INT,
-   SubTotal DECIMAL(15,2),
-   ProductID INT NOT NULL,
-   StatusID INT NOT NULL,
-   VendorID INT,
-   PersonID INT NOT NULL,
-   FOREIGN KEY(ProductID) REFERENCES Product(ProductID),
-   FOREIGN KEY(StatusID) REFERENCES Status(StatusID),
-   FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID),
-   FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
-);
-
-CREATE TABLE SalesOrderDetail(
-   ProductID INT,
-   SalesOrderID INT,
-   LineTotal DECIMAL(15,2) NOT NULL,
-   OrderQuantity INT NOT NULL,
-   UnitPrice DECIMAL(15,2),
-   PRIMARY KEY(ProductID, SalesOrderID),
-   FOREIGN KEY(ProductID) REFERENCES Product(ProductID),
-   FOREIGN KEY(SalesOrderID) REFERENCES SalesOrder(SalesOrderID)
-);
+INSERT [dbo].[Vendor] ([VendorID], [Name], [adress], [zipcode], [city], [email]) VALUES (1, N'DUPONT', N'12 rue du près', 62217, N'Achicourt', N'robert.dupont@gmail.com')
+INSERT [dbo].[Vendor] ([VendorID], [Name], [adress], [zipcode], [city], [email]) VALUES (2, N'VINIOX', N'12 rue du pays', 75000, N'Paris', N'viniox@vin.fr')
+INSERT [dbo].[Vendor] ([VendorID], [Name], [adress], [zipcode], [city], [email]) VALUES (3, N'DOMART', N'34 rue des postes', 69000, N'Lyon', N'domart@mail.fr')
+SET IDENTITY_INSERT [dbo].[Vendor] OFF
+GO
+ALTER TABLE [dbo].[Address]  WITH CHECK ADD FOREIGN KEY([PersonID])
+REFERENCES [dbo].[Person] ([PersonID])
+GO
+ALTER TABLE [dbo].[Discount]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Product] ([ProductID])
+GO
+ALTER TABLE [dbo].[Person]  WITH CHECK ADD FOREIGN KEY([RoleID])
+REFERENCES [dbo].[role] ([RoleID])
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD FOREIGN KEY([BrandID])
+REFERENCES [dbo].[ProductBrand] ([BrandID])
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD FOREIGN KEY([ProductCategoryID])
+REFERENCES [dbo].[ProductCategory] ([ProductCategoryID])
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD FOREIGN KEY([VendorID])
+REFERENCES [dbo].[Vendor] ([VendorID])
+GO
+ALTER TABLE [dbo].[PurchaseOrder]  WITH CHECK ADD FOREIGN KEY([PersonID])
+REFERENCES [dbo].[Person] ([PersonID])
+GO
+ALTER TABLE [dbo].[PurchaseOrder]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Product] ([ProductID])
+GO
+ALTER TABLE [dbo].[PurchaseOrder]  WITH CHECK ADD FOREIGN KEY([StatusID])
+REFERENCES [dbo].[Status] ([StatusID])
+GO
+ALTER TABLE [dbo].[PurchaseOrder]  WITH CHECK ADD FOREIGN KEY([VendorID])
+REFERENCES [dbo].[Vendor] ([VendorID])
+GO
+ALTER TABLE [dbo].[SalesOrder]  WITH CHECK ADD FOREIGN KEY([PersonID])
+REFERENCES [dbo].[Person] ([PersonID])
+GO
+ALTER TABLE [dbo].[SalesOrder]  WITH CHECK ADD FOREIGN KEY([StatusID])
+REFERENCES [dbo].[Status] ([StatusID])
+GO
+ALTER TABLE [dbo].[SalesOrderDetail]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Product] ([ProductID])
+GO
+ALTER TABLE [dbo].[SalesOrderDetail]  WITH CHECK ADD FOREIGN KEY([SalesOrderID])
+REFERENCES [dbo].[SalesOrder] ([SalesOrderID])
+GO
