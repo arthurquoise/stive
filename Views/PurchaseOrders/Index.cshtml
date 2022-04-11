@@ -49,16 +49,16 @@
                 @Html.DisplayFor(modelItem => item.SubTotal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Person.Email)
+                @Html.DisplayFor(modelItem => item.Person.LastName) @Html.DisplayFor(modelItem => item.Person.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.Image)
+                @Html.DisplayFor(modelItem => item.Product.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vendor.Adress)
+                @Html.DisplayFor(modelItem => item.Vendor.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PurchaseOrderId">Edit</a> |

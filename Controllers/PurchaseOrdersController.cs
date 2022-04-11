@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,24 @@ namespace stive.Controllers
         // GET: PurchaseOrders
         public async Task<IActionResult> Index()
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
             var stiveContext = _context.PurchaseOrders.Include(p => p.Person).Include(p => p.Product).Include(p => p.Status).Include(p => p.Vendor);
-            return View(await stiveContext.ToListAsync());
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(await stiveContext.ToListAsync());
+            }
         }
 
         // GET: PurchaseOrders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -44,17 +56,50 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(purchaseOrder);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(purchaseOrder);
+            }
+
         }
 
         // GET: PurchaseOrders/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "Email");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image");
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress");
-            return View();
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
+            var product = await _context.Products.FindAsync(id);
+
+            if (product != null)
+            {
+                ViewBag.productQuantity = product.Quantity;
+                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", product.ProductId);
+                ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
+                ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", product.VendorId);
+                ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
+            }
+            else
+            {
+                ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name");
+                ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name");
+                ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name");
+                ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName");
+            }
+
+
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: PurchaseOrders/Create
@@ -64,22 +109,25 @@ namespace stive.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PurchaseOrderId,OrderDate,Quantity,SubTotal,ProductId,StatusId,VendorId,PersonId")] PurchaseOrder purchaseOrder)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(purchaseOrder);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "Email", purchaseOrder.PersonId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image", purchaseOrder.ProductId);
+            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName", purchaseOrder.PersonId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", purchaseOrder.ProductId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name", purchaseOrder.StatusId);
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress", purchaseOrder.VendorId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", purchaseOrder.VendorId);
             return View(purchaseOrder);
         }
 
         // GET: PurchaseOrders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -90,11 +138,20 @@ namespace stive.Controllers
             {
                 return NotFound();
             }
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "Email", purchaseOrder.PersonId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image", purchaseOrder.ProductId);
+            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName", purchaseOrder.PersonId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", purchaseOrder.ProductId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name", purchaseOrder.StatusId);
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress", purchaseOrder.VendorId);
-            return View(purchaseOrder);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", purchaseOrder.VendorId);
+
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(purchaseOrder);
+            }
+
         }
 
         // POST: PurchaseOrders/Edit/5
@@ -129,16 +186,18 @@ namespace stive.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "Email", purchaseOrder.PersonId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Image", purchaseOrder.ProductId);
+            ViewData["PersonId"] = new SelectList(_context.People, "PersonId", "FirstName", purchaseOrder.PersonId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Name", purchaseOrder.ProductId);
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Name", purchaseOrder.StatusId);
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Adress", purchaseOrder.VendorId);
+            ViewData["VendorId"] = new SelectList(_context.Vendors, "VendorId", "Name", purchaseOrder.VendorId);
             return View(purchaseOrder);
         }
 
         // GET: PurchaseOrders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.sessionv = HttpContext.Session.GetString("Connected");
+
             if (id == null)
             {
                 return NotFound();
@@ -155,7 +214,14 @@ namespace stive.Controllers
                 return NotFound();
             }
 
-            return View(purchaseOrder);
+            if (ViewBag.sessionv == null)
+            {
+                return View("AccessForbiden");
+            }
+            else
+            {
+                return View(purchaseOrder);
+            }
         }
 
         // POST: PurchaseOrders/Delete/5
