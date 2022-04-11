@@ -28,6 +28,7 @@ Pour cloner et lancer cette application, installer les pré-requis puis :
 # Ouvrir le dépôt github depuis Visual Studio
 $ https://github.com/arthurquoise/stive
 
+# Créer une base nommée "stive"
 # Ouvrir stive-sql.txt et exécuter la requête dans Microsoft SQL Management Studio
 
 # Exécuter l'application
