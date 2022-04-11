@@ -15,8 +15,9 @@ namespace stive.Controllers
             _context = stiveContext;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int categoryId)
         {
+            ViewBag.categories = await _context.ProductCategories.ToListAsync();
             var stiveContext = _context.Products.Include(p => p.Brand).Include(p => p.ProductCategory).Include(p => p.Vendor);
             return View(await stiveContext.ToListAsync());
         }
